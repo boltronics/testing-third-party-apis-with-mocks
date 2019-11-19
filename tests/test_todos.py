@@ -1,12 +1,13 @@
 # Standard library imports...
+from unittest import skipIf
 from unittest.mock import Mock, patch
 
 # Third-party imports...
 from nose.tools import assert_list_equal, assert_is_none, assert_true
 
 # Local imports...
+from project.constants import SKIP_REAL
 from project.services import get_todos, get_uncompleted_todos
-
 
 
 class TestTodos(object):
@@ -102,6 +103,7 @@ class TestUncompletedTodos(object):
         assert_list_equal(uncompleted_todos, [])
 
 
+@skipIf(SKIP_REAL, 'Skipping tests that hit the real API server.')
 def test_integration_contract():
     # Call the service to hit the actual API.
     actual = get_todos()
